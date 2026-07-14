@@ -15,9 +15,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem("token");
-    if (stored) setToken(stored);
-  }, []);
+  const stored = localStorage.getItem("token");
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  if (stored) setToken(stored);
+}, []);
 
   const login = (newToken: string) => {
     localStorage.setItem("token", newToken);

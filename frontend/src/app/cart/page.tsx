@@ -40,12 +40,13 @@ export default function CartPage() {
   };
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      router.push("/login");
-      return;
-    }
-    loadCart();
-  }, [isLoggedIn]);
+  if (!isLoggedIn) {
+    router.push("/login");
+    return;
+  }
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  loadCart();
+}, [isLoggedIn, router]);
 
   const updateQuantity = async (productId: number, quantity: number) => {
     if (quantity < 1) return;

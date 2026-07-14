@@ -39,7 +39,7 @@ export default function OrdersPage() {
       .then(setOrders)
       .catch((err) => setError(err instanceof Error ? err.message : "Failed to load orders"))
       .finally(() => setLoading(false));
-  }, [isLoggedIn]);
+  }, [isLoggedIn, router]);
 
   if (loading) return <div className="p-6">Loading orders...</div>;
   if (error) return <div className="p-6 text-red-600">{error}</div>;
