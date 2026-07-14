@@ -1,5 +1,5 @@
-import { Injectable, BadRequestException } from "@nestjs/common";
-import { PrismaService } from "../prisma/prisma.service";
+import { Injectable, BadRequestException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class OrdersService {
@@ -12,7 +12,7 @@ export class OrdersService {
     });
 
     if (!cart || cart.items.length === 0) {
-      throw new BadRequestException("Cart is empty");
+      throw new BadRequestException('Cart is empty');
     }
 
     const order = await this.prisma.order.create({
@@ -44,7 +44,7 @@ export class OrdersService {
       include: {
         items: { include: { product: true } },
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
     });
   }
 }

@@ -1,35 +1,58 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, ParseIntPipe, UseGuards, Request } from "@nestjs/common";
-import { CartService } from "./cart.service";
-import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
-import { AddItemDto } from "./dto/add-item.dto";
-import { UpdateItemDto } from "./dto/update-item.dto";
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  ParseIntPipe,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
+import { CartService } from './cart.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AddItemDto } from './dto/add-item.dto';
+import { UpdateItemDto } from './dto/update-item.dto';
+import type { AuthenticatedRequest } from '../auth/types/authenticated-request.interface';
 
-@Controller("cart")
+@Controller('cart')
 @UseGuards(JwtAuthGuard)
 export class CartController {
   constructor(private cartService: CartService) {}
 
   @Get()
-  getCart(@Request() req) {
+  getCart(@Req() req: AuthenticatedRequest) {
     return this.cartService.getCart(req.user.userId);
   }
 
-  @Post("items")
-  addItem(@Request() req, @Body() dto: AddItemDto) {
-    return this.cartService.addItem(req.user.userId, dto.productId, dto.quantity);
+  @Post('items')
+  addItem(@Req() req: AuthenticatedRequest, @Body() dto: AddItemDto) {
+    return this.cartService.addItem(
+      req.user.userId,
+      dto.productId,
+      dto.quantity,
+    );
   }
 
-  @Patch("items/:productId")
+  @Patch('items/:productId')
   updateItem(
-    @Request() req,
-    @Param("productId", ParseIntPipe) productId: number,
+    @Req() req: AuthenticatedRequest,
+    @Param('productId', ParseIntPipe) productId: number,
     @Body() dto: UpdateItemDto,
   ) {
-    return this.cartService.updateItem(req.user.userId, productId, dto.quantity);
+    return this.cartService.updateItem(
+      req.user.userId,
+      productId,
+      dto.quantity,
+    );
   }
 
-  @Delete("items/:productId")
-  removeItem(@Request() req, @Param("productId", ParseIntPipe) productId: number) {
+  @Delete('items/:productId')
+  removeItem(
+    @Req() req: AuthenticatedRequest,
+    @Param('productId', ParseIntPipe) productId: number,
+  ) {
     return this.cartService.removeItem(req.user.userId, productId);
   }
 }

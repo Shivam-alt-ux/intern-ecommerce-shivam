@@ -1,5 +1,5 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "../prisma/prisma.service";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class CartService {
@@ -63,7 +63,7 @@ export class CartService {
     });
 
     if (!item) {
-      throw new NotFoundException("Item not in cart");
+      throw new NotFoundException('Item not in cart');
     }
 
     return this.prisma.cartItem.update({
@@ -82,7 +82,7 @@ export class CartService {
     });
 
     if (!item) {
-      throw new NotFoundException("Item not in cart");
+      throw new NotFoundException('Item not in cart');
     }
 
     return this.prisma.cartItem.delete({
