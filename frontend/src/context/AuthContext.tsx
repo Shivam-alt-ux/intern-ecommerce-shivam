@@ -21,10 +21,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 }, []);
 
   const login = (newToken: string) => {
-    localStorage.setItem("token", newToken);
-    setToken(newToken);
-  };
+  localStorage.setItem("token", newToken);
+  setToken(newToken);
 
+  const pendingId = sessionStorage.getItem("pendingCartProductId");
+  if (pendingId) {
+    sessionStorage.removeItem("pendingCartProductId");
+  }
+};
   const logout = () => {
     localStorage.removeItem("token");
     setToken(null);

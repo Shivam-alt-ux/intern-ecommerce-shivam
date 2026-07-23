@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { apiFetch } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
 
 interface CartItem {
   id: number;
@@ -31,8 +32,8 @@ export default function CartPage() {
   const [error, setError] = useState("");
   const [checkingOut, setCheckingOut] = useState(false);
 
-  const loadCart = () => {
-    setLoading(true);
+  const loadCart = (showLoading = false) => {
+    if (showLoading) setLoading(true);
     apiFetch("/cart")
       .then(setCart)
       .catch((err) => setError(err instanceof Error ? err.message : "Failed to load cart"))
@@ -40,13 +41,13 @@ export default function CartPage() {
   };
 
   useEffect(() => {
-  if (!isLoggedIn) {
-    router.push("/login");
-    return;
-  }
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  loadCart();
-}, [isLoggedIn, router]);
+    if (!isLoggedIn) {
+      router.push("/login");
+      return;
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadCart(true);
+  }, [isLoggedIn, router]);
 
   const updateQuantity = async (productId: number, quantity: number) => {
     if (quantity < 1) return;
@@ -103,8 +104,14 @@ export default function CartPage() {
         <>
           <div className="space-y-4 mb-6">
             {cart.items.map((item) => (
-              <div key={item.id} className="flex items-center gap-4 border rounded p-3">
-                <img src={item.product.image} alt={item.product.title} className="w-16 h-16 object-contain" />
+              <div key={item.id} className="flex items-center gap-4 border border-zinc-800 rounded-xl p-4 bg-zinc-900">
+                <Image
+                  src={item.product.image}
+                  alt={item.product.title}
+                  width={64}
+                  height={64}
+                  className="w-16 h-16 object-contain"
+                />
                 <div className="flex-1">
                   <p className="font-medium">{item.product.title}</p>
                   <p className="text-sm text-gray-500">${item.product.price}</p>

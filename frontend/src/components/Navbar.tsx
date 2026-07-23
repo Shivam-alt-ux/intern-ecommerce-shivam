@@ -14,7 +14,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 border-b">
+    <nav className="sticky top-0 z-50 flex justify-between items-center px-6 py-4 bg-white dark:bg-black">
       <Link href="/products" className="font-semibold">
         Intern Shop
       </Link>

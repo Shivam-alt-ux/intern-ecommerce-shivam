@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { apiFetch } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
+import Image from "next/image";
 
 interface Product {
   id: number;
@@ -34,6 +35,7 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = async () => {
     if (!isLoggedIn) {
+      sessionStorage.setItem("pendingCartProductId", String(id));
       router.push("/login");
       return;
     }
@@ -57,7 +59,13 @@ export default function ProductDetailPage() {
 
   return (
     <div className="p-6 max-w-2xl mx-auto">
-      <img src={product.image} alt={product.title} className="w-full h-64 object-contain mb-4" />
+      <Image
+        src={product.image}
+        alt={product.title}
+        width={400}
+        height={256}
+        className="w-full h-64 object-contain mb-4"
+      />
       <h1 className="text-2xl font-semibold mb-1">{product.title}</h1>
       <p className="text-sm text-gray-500 mb-2">
         {product.category} {product.brand ? `· ${product.brand}` : ""}

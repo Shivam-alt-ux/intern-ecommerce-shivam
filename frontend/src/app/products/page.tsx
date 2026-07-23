@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { apiFetch } from "@/lib/api";
+import Image from "next/image";
 
 interface Product {
   id: number;
@@ -37,15 +38,13 @@ export default function ProductsPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-semibold mb-4">Products</h1>
-
       <input
         type="text"
         placeholder="Search products or category..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full max-w-sm border rounded px-3 py-2 mb-6"
+        className="w-full max-w-sm border border-zinc-800 bg-zinc-900 rounded-lg px-3 py-2 mb-6 outline-none focus:border-zinc-500 transition-colors"
       />
-
       {filtered.length === 0 ? (
         <p className="text-sm text-gray-500">No products match your search.</p>
       ) : (
@@ -54,11 +53,13 @@ export default function ProductsPage() {
             <Link
               key={product.id}
               href={`/products/${product.id}`}
-              className="border rounded p-3 hover:shadow-md transition"
+              className="border border-zinc-800 rounded-xl p-4 bg-zinc-900 hover:border-zinc-600 hover:-translate-y-1 transition-all"
             >
-              <img
+              <Image
                 src={product.image}
                 alt={product.title}
+                width={200}
+                height={128}
                 className="w-full h-32 object-contain mb-2"
               />
               <p className="text-sm font-medium line-clamp-2">{product.title}</p>
