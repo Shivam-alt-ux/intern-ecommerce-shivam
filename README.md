@@ -66,3 +66,15 @@ Products are seeded into the database from [dummyjson.com](https://dummyjson.com
 - No unit tests yet
 - Redis caching not implemented (optional bonus)
 - No refresh token — JWT expires after a fixed duration and requires re-login
+## Live Demo (Deployed on AWS)
+
+- **Frontend:** http://intern-ecommerce-shivam-frontend.s3-website.ap-south-1.amazonaws.com
+- **Backend API:** http://ecommerce-alb-1346095368.ap-south-1.elb.amazonaws.com
+
+### AWS Architecture
+- **S3** — static frontend hosting
+- **ECS/Fargate** — containerized backend, running in a Docker container
+- **Application Load Balancer (ALB)** — provides a stable, permanent endpoint for the backend (Fargate tasks get new IPs on restart, so ALB is required for reliability)
+- **RDS (PostgreSQL)** — managed production database
+- **IAM** — roles and permissions for ECS task execution, CLI deployment access
+- **CloudWatch** — backend application logs
