@@ -23,3 +23,5 @@ Thumbs.db
 # IDE
 .vscode/*
 !.vscode/extensions.json
+aws/
+awscliv2.zip
